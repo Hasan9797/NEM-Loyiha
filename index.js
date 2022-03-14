@@ -1,13 +1,18 @@
 const express = require("express");
 const path = require("path");
 const expresEdege = require("express-edge");
+const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(expresEdege.engine);
-app.set("views", `${__dirname}/views`);
+mongoose.connect("mongodb+srv://hasan:RSRSmqfUSsIKRb0A@cluster0.phuqw.mongodb.net/MEN-Loyiha", () =>{
+    console.log("DATABASE CONNECTED SUCCESSFULLY");
+})
 
 app.use(express.static("public"));
+
+app.use(expresEdege.engine);
+app.set("views", `${__dirname}/views`);
 
 app.get("/", (req, res) => {
     res.render("index");

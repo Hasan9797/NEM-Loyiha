@@ -5,9 +5,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-mongoose.connect("mongodb+srv://hasan:RSRSmqfUSsIKRb0A@cluster0.phuqw.mongodb.net/MEN-Loyiha", () =>{
-    console.log("DATABASE CONNECTED SUCCESSFULLY");
-})
+mongoose.connect("mongodb+srv://hasan:RSRSmqfUSsIKRb0A@cluster0.phuqw.mongodb.net/MEN-Loyiha")
 
 app.use(express.static("public"));
 

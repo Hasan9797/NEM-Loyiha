@@ -14,15 +14,15 @@ app.get("/", (req, res) => {
 })
 
 app.get("/about", (req, res) => {
-    res.sendFile(path.join(__dirname, "pages/about.html"));
+    res.render("about");
 })
 
 app.get("/contact", (req, res) => {
-    res.sendFile(path.join(__dirname, "pages/contact.html"));
+    res.render("contact");
 })
 
 app.get("/post", (req, res) => {
-    res.sendFile(path.join(__dirname, "pages/post.html"));
+    res.render("post");
 })
 
 app.listen(5000, () => {console.log("Server has been on PORT 5000...")});

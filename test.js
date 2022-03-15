@@ -14,3 +14,13 @@ mongoose.connect("mongodb+srv://hasan:lGv4pJh14SLM9Qqh@cluster0.yroge.mongodb.ne
 //     description: "My second description",
 //     content: "Lorem ipsun second content"
 // }, (err, post) => { console.log(err, post);})
+
+
+
+// const http = require("http");
+
+// const server = http.createServer( (req, res) => {
+
+// })
+
+// server.listen(5000, () => {console.log("server has been on port 5000...");})

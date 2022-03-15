@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const expresEdege = require("express-edge");
 const mongoose = require("mongoose");
+const Post = require("./Modules/Post");
 
 const app = express();
 
@@ -11,8 +12,8 @@ app.use(express.static("public"));
 
 app.use(expresEdege.engine);
 app.set("views", `${__dirname}/views`);
-// app.use(express.json());
-// app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 app.get("/", (req, res) => {
     res.render("index");
@@ -30,8 +31,14 @@ app.get("/post", (req, res) => {
     res.render("post");
 })
 
-app.get("posts/new", (req, res) => {
-    res.render("created");
+app.get("/postnew", (req, res) => {
+    res.render("created")
+})
+
+app.post("/postnew/created", (req, res) => {
+    Post.create(req.body, (err, post) => {
+        res.redirect("/")
+    })
 })
 
 app.listen(5000, () => {console.log("Server has been on PORT 5000...")});

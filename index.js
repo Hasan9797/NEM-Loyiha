@@ -3,6 +3,7 @@ const path = require("path");
 const expresEdege = require("express-edge");
 const mongoose = require("mongoose");
 const Post = require("./Modules/Post");
+const fileUpload = require("express-fileupload");
 
 const app = express();
 
@@ -10,6 +11,7 @@ mongoose.connect("mongodb+srv://hasan:lGv4pJh14SLM9Qqh@cluster0.yroge.mongodb.ne
 
 app.use(express.static("public"));
 
+app.use(fileUpload);
 app.use(expresEdege.engine);
 app.set("views", `${__dirname}/views`);
 app.use(express.json());
@@ -42,8 +44,14 @@ app.get("/postnew", (req, res) => {
 })
 
 app.post("/postnew/created", (req, res) => {
-    Post.create(req.body, (err, post) => {
-        res.redirect("/")
+    const {image} = req.files;
+    image.mv(path.resolve(__dirname, "public/posts"), (err) => {
+        if(err){
+            throw err
+        }
+        Post.create({...req.body, image:`/posts${image.name}`}, (err, post) => {
+            res.redirect("/")
+        })
     })
 })
 

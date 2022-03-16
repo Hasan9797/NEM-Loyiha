@@ -7,8 +7,8 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>Clean Blog</h1>
-                        <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                        <h1>Created Post</h1>
+                        <span class="subheading">You can add as many posts as you want</span>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,11 @@
             <div class="col-md-8 offset-md-2">
                 <form action="/postnew/created" method="POST">
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="title" placeholder="Enter your name...">
+                        <input type="text" class="form-control" name="username" placeholder="Enter your Name...">
+                        <label>Username</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="title" placeholder="Enter your Title...">
                         <label>Title</label>
                     </div>
                     <div class="form-floating">

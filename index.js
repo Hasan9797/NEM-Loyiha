@@ -22,18 +22,20 @@ const app = express();
 
 mongoose.connect("mongodb+srv://hasan:lGv4pJh14SLM9Qqh@cluster0.yroge.mongodb.net/MEN-project");
 
-app.use(fileUpload());
+app.use(fileUpload()); // file (rasim vahokozolar..) yuklash uchun
 app.use(express.static("public"));
 app.use(expresEdege.engine);
 app.set("views", `${__dirname}/views`);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-
+// bosh sahifa, createPost va Mongoodb yordamida post qo'shgan Userni id si orqali o'zining posMenyusiga o'tish
 app.get("/", HomePageCantroller);
 app.get("/post/:id", getPostController);
 app.get("/postnew", postNewController);
 app.post("/postnew/created", ValidationsMedliwear, createdController);
+
+//register qismi va Userni databazaga joylash
 app.get("/reg", createUserController);
 app.post("/auth/reg", storeUserCotroller);
 

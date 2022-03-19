@@ -1,9 +1,16 @@
 const express = require("express");
-const path = require("path");
+// const path = require("path");
 const expresEdege = require("express-edge");
 const mongoose = require("mongoose");
-const Post = require("./Modules/Post");
+// const Post = require("./Modules/Post");
 const fileUpload = require("express-fileupload");
+const ValidationsMedliwear = require("./middleware/ValidationMedliwear");
+
+//Controllers import
+const HomePageCantroller = require("./Controllers/HomePage");
+const getPostController = require("./Controllers/getPost");
+const postNewController = require("./Controllers/postNew");
+const createdController = require("./Controllers/created");
 
 const app = express();
 
@@ -16,43 +23,11 @@ app.set("views", `${__dirname}/views`);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get("/", async (req, res) => {
-    const posts = await Post.find()
-    res.render("index", {posts});
-})
 
-app.get("/about", (req, res) => {
-    res.render("about");
-})
-
-app.get("/contact", (req, res) => {
-    res.render("contact");
-})
-
-// app.get("/post",(req, res) => {
-//     res.render("post");
-// })
-
-app.get("/post/:id", async (req, res) => {
-    const post = await Post.findById(req.params.id)
-    res.render("post", {post});
-})
-
-app.get("/postnew", (req, res) => {
-    res.render("created")
-})
-
-app.post("/postnew/created", (req, res) => {
-    const {image} = req.files;
-    image.mv(path.resolve(__dirname, "public/posts", image.name), (err) => {
-        if(err){
-            console.log(err);
-        }
-        Post.create({...req.body, image:`/posts/${image.name}`}, (err, post) => {
-            res.redirect("/")
-        })
-    })
-})
+app.get("/", HomePageCantroller);
+app.get("/post/:id", getPostController);
+app.get("/postnew", postNewController);
+app.post("/postnew/created", ValidationsMedliwear, createdController);
 
 app.listen(5000, () => {console.log("Server has been on PORT 5000...")});
 

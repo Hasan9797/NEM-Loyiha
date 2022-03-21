@@ -6,6 +6,10 @@ const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 const expressSession = require("express-session");
 const mongoStore = require("connect-mongo");
+const connectFlash = require("connect-flash");
+
+//Validations
+const ValidationsMedliwear = require("./middleware/ValidationMedliwear");
 
 //Controllers import
 const HomePageCantroller = require("./Controllers/HomePage");
@@ -14,22 +18,17 @@ const postNewController = require("./Controllers/postNew");
 const createdController = require("./Controllers/created");
 const createUserController = require("./Controllers/createUser");
 const storeUserCotroller = require("./Controllers/userStore");
-const LogInController = require("./Controllers/login");
-const LoginStoreController = require("./Controllers/loginStore"); 
-
-//Validations
-const ValidationsMedliwear = require("./middleware/ValidationMedliwear");
-// const ValidationsRegister = require("./middleware/validationRegistr"); // shartemas ekan
-// osonroq yolibor storeUserni o'zida halqilib ketamiz
-const authMiddlewear = require("./middleware/auth");
+const loginController = require("./Controllers/login");
+const loginStoreController = require("./Controllers/loginStore");
 
 const app = express();
-const mongoUrl = "mongodb+srv://hasan:lGv4pJh14SLM9Qqh@cluster0.yroge.mongodb.net/MEN-project"
 
-mongoose.connect(mongoUrl);
+const MongoUrl = "mongodb+srv://hasan:lGv4pJh14SLM9Qqh@cluster0.yroge.mongodb.net/MEN-project"
+mongoose.connect(MongoUrl);
+
 app.use(expressSession({
     secret: "hasan",
-    store: mongoStore.create({mongoUrl: mongoUrl})
+    store: mongoStore.create({mongoUrl: MongoUrl})
 }))
 
 app.use(fileUpload()); // file (rasim vahokozolar..) yuklash uchun
@@ -38,20 +37,21 @@ app.use(expresEdege.engine);
 app.set("views", `${__dirname}/views`);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(connectFlash());
 
 // bosh sahifa, createPost va Mongoodb yordamida post qo'shgan Userni id si orqali o'zining posMenyusiga o'tish
 app.get("/", HomePageCantroller);
 app.get("/post/:id", getPostController);
-app.get("/postnew", authMiddlewear, postNewController);
-app.post("/postnew/created", authMiddlewear, ValidationsMedliwear, createdController);
+app.get("/postnew", postNewController);
+app.post("/postnew/created", ValidationsMedliwear, createdController);
 
 //register qismi va Userni databazaga joylash
 app.get("/reg", createUserController);
 app.post("/auth/reg", storeUserCotroller);
 
 //Login qismi
-app.get("/login", LogInController);
-app.post("/auth/log", LoginStoreController);
+app.get("/login", loginController);
+app.post("/auth/log", loginStoreController)
 
 app.listen(5000, () => {console.log("Server has been on PORT 5000...")});
 

@@ -1,9 +1,9 @@
 const User = require("../Modules/User");
 
 module.exports = (req, res, next) => {  
-    User.findById(req.session.userId, (req, user) => {
+    User.findById(req.session.userId, (err, user) => {
         if(err || !user){
-            return res.redirec("/")
+            return res.redirec("/");
         }
         next();
     })

@@ -17,6 +17,8 @@ const postNewController = require("./Controllers/postNew");
 const createdController = require("./Controllers/created");
 const createUserController = require("./Controllers/createUser");
 const storeUserCotroller = require("./Controllers/userStore");
+const LogInController = require("./Controllers/login");
+const LoginStoreController = require("./Controllers/loginStore"); 
 
 const app = express();
 
@@ -38,6 +40,10 @@ app.post("/postnew/created", ValidationsMedliwear, createdController);
 //register qismi va Userni databazaga joylash
 app.get("/reg", createUserController);
 app.post("/auth/reg", storeUserCotroller);
+
+//Login qismi
+app.get("/login", LogInController);
+app.post("/auth/log", LoginStoreController);
 
 app.listen(5000, () => {console.log("Server has been on PORT 5000...")});
 

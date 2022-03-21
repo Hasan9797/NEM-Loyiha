@@ -16,13 +16,13 @@ const UserSchema = mongoose.Schema({
     }
 })
 
-UserSchema.pre("save", function(next){
-    const user = this
-    bcrypt.hash("user.password", 10, function(err, encrypted){
-        user.password = encrypted;
-        next();
-    })
-})
+// UserSchema.pre("save", function(next){
+//     const user = this
+//     bcrypt.hash("user.password", 10, function(err, encrypted){
+//         user.password = encrypted;
+//         next();
+//     })
+// })
 
 const User = mongoose.model("User", UserSchema);
 

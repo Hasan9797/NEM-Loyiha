@@ -4,11 +4,8 @@ const expresEdege = require("express-edge");
 const mongoose = require("mongoose");
 // const Post = require("./Modules/Post");
 const fileUpload = require("express-fileupload");
-
-//Validations
-const ValidationsMedliwear = require("./middleware/ValidationMedliwear");
-// const ValidationsRegister = require("./middleware/validationRegistr"); // shartemas ekan
-// osonroq yolibor storeUserni o'zida halqilib ketamiz
+const expressSession = require("express-session");
+const mongoStore = require("connect-mongo");
 
 //Controllers import
 const HomePageCantroller = require("./Controllers/HomePage");
@@ -20,9 +17,19 @@ const storeUserCotroller = require("./Controllers/userStore");
 const LogInController = require("./Controllers/login");
 const LoginStoreController = require("./Controllers/loginStore"); 
 
-const app = express();
+//Validations
+const ValidationsMedliwear = require("./middleware/ValidationMedliwear");
+// const ValidationsRegister = require("./middleware/validationRegistr"); // shartemas ekan
+// osonroq yolibor storeUserni o'zida halqilib ketamiz
 
-mongoose.connect("mongodb+srv://hasan:lGv4pJh14SLM9Qqh@cluster0.yroge.mongodb.net/MEN-project");
+const app = express();
+const mongoUrl = "mongodb+srv://hasan:lGv4pJh14SLM9Qqh@cluster0.yroge.mongodb.net/MEN-project"
+
+mongoose.connect(mongoUrl);
+app.use(expressSession({
+    secret: "hasan",
+    store: mongoStore.create({mongoUrl: mongoUrl})
+}))
 
 app.use(fileUpload()); // file (rasim vahokozolar..) yuklash uchun
 app.use(express.static("public"));
